@@ -22,3 +22,26 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+*.properties
+.idea/vcs.xml
+.idea/misc.xml
+.idea/jpa-buddy.xml
+.idea/jarRepositories.xml
+.idea/encodings.xml
+.idea/compiler.xml
+target/classes/db.migration/V1__Init_DB.sql
+target/classes/public/arts/css/style.css
+target/classes/public/arts/FamilyStyle.html
+target/classes/public/arts/FemaleСharisma.html
+target/classes/public/arts/FindYourStyle.html
+target/classes/public/arts/GuideFashionableEras.html
+target/classes/public/arts/images/715527724-charlize-theron-deixa-gorjeta-generosa-1024x576.jpg
+target/classes/public/arts/images/belye-tufli-16.jpg
+target/classes/public/arts/images/family-look.jpg
+target/classes/public/arts/images/moda-nulevyh-zanizhennaja-talija-plamennyj-privet-iz-nulevyh--9.jpg
+target/classes/public/arts/images/moda20vek.jpg
+target/classes/public/arts/images/yourStyle.jpg
+target/classes/public/arts/newTrends.html
+target/classes/public/arts/WhatIsFashion.html
+target/classes/public/error/404.html
+target/classes/public/test.html
