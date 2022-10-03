@@ -2,6 +2,7 @@ package com.truestyle.controller;
 
 import com.truestyle.entity.stuff.ShopStuff;
 import com.truestyle.pojo.MessageResponse;
+import com.truestyle.pojo.ShopStuffCVData;
 import com.truestyle.service.StuffService;
 import com.truestyle.service.WardrobeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ public class StuffController {
     @Autowired
     StuffService stuffService;
 
-    // Переписать, чтобы возвращал еще картинку
     @PostMapping("/get/cv")
-    public List<ShopStuff> getCvStuff(@RequestBody Integer stuffData){
-        return stuffService.getStuffML(stuffData);
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public List<ShopStuff> getCvStuff(@RequestBody ShopStuffCVData stuffData){
+        return stuffService.getStuffMLReccomendation(stuffData);
     }
 
     /** Получить одежду для рекоммендаций

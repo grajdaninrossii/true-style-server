@@ -26,8 +26,8 @@ public class Gender {
     @Column(nullable = false)
     private Long id;
 
-    @Column(length = 20, nullable = false)
-    private String gender_name;
+    @Column(name="gender_name", length = 20, nullable = false)
+    private String genderName;
 
 //    @ManyToOne(optional = false)
 //    private User user;
