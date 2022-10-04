@@ -5,6 +5,7 @@ import com.truestyle.pojo.MessageResponse;
 import com.truestyle.pojo.ShopStuffCVData;
 import com.truestyle.service.StuffService;
 import com.truestyle.service.WardrobeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,13 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/clothes")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StuffController {
 
-    @Autowired
-    WardrobeService wardrobeService;
+    private final WardrobeService wardrobeService;
 
-    @Autowired
-    StuffService stuffService;
+    private final StuffService stuffService;
 
     @PostMapping("/get/cv")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

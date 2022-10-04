@@ -7,6 +7,7 @@ import com.truestyle.pojo.ShopStuffCVData;
 import com.truestyle.repository.user.GenderRepository;
 import com.truestyle.repository.stuff.StuffShopRepository;
 import com.truestyle.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,16 +18,14 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StuffService {
 
-    @Autowired
-    StuffShopRepository shopStuffRepository;
+    private final StuffShopRepository shopStuffRepository;
 
-    @Autowired
-    GenderRepository genderRepository;
+    private final GenderRepository genderRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     List<String> articleTypes;
     Gender gender;

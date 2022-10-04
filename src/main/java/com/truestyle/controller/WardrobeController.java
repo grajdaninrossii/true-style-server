@@ -7,6 +7,8 @@ import com.truestyle.pojo.WardrobeResponse;
 import com.truestyle.service.StuffService;
 import com.truestyle.service.WardrobeService;
 import javax.validation.Valid;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
@@ -20,13 +22,12 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/wardrobe")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class WardrobeController {
 
-    @Autowired
-    WardrobeService wardrobeService;
+    private final WardrobeService wardrobeService;
 
-    @Autowired
-    StuffService stuffService;
+    private final StuffService stuffService;
 
     @GetMapping(value = "/get/userstuff")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

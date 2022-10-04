@@ -6,6 +6,7 @@ import com.truestyle.entity.user.User;
 import com.truestyle.pojo.NewToken;
 import com.truestyle.repository.user.PasswordTokenRepository;
 import com.truestyle.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -18,27 +19,20 @@ import java.time.ZoneId;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    MailSender mailSender;
+    private final MailSender mailSender;
 
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final PasswordTokenRepository passwordTokenRepository;
 
-    @Autowired
-    PasswordTokenRepository passwordTokenRepository;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    JwtUtils jwtUtils;
-
-
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
 
 

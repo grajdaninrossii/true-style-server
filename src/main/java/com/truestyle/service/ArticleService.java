@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
-
     private final ArticleRepository articleRepository;
 
     public Article findById(Long id){

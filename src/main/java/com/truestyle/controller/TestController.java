@@ -2,6 +2,7 @@ package com.truestyle.controller;
 
 import com.truestyle.service.AuthService;
 import com.truestyle.service.StuffService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/test")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TestController {
 
-    @Autowired
-    private StuffService stuffService;
+    private final StuffService stuffService;
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     @GetMapping("/all")
     public String getAll() {

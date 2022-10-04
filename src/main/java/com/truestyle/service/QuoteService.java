@@ -2,17 +2,17 @@ package com.truestyle.service;
 
 import com.truestyle.entity.app.Quote;
 import com.truestyle.repository.app.QuoteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class QuoteService {
 
-    @Autowired
-    private QuoteRepository quoteRepository;
-
+    private final QuoteRepository quoteRepository;
 
     private Quote quoteOfDay;
     private Date dateQuote;

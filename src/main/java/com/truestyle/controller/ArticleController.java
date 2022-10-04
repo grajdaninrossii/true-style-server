@@ -2,6 +2,7 @@ package com.truestyle.controller;
 
 import com.truestyle.entity.app.Article;
 import com.truestyle.service.ArticleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +11,10 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/art")
+@RequiredArgsConstructor
 public class ArticleController {
 
-    @Autowired
-    ArticleService articleService;
+    private final ArticleService articleService;
 
     /** Получить все статьи
      *

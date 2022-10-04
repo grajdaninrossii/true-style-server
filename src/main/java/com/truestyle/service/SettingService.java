@@ -7,6 +7,7 @@ import com.truestyle.pojo.UserInfo;
 import com.truestyle.repository.user.GenderRepository;
 import com.truestyle.repository.user.StyleUserRepository;
 import com.truestyle.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,16 +16,14 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SettingService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    GenderRepository genderRepository;
+    private final GenderRepository genderRepository;
 
-    @Autowired
-    StyleUserRepository styleUserRepo;
+    private final StyleUserRepository styleUserRepo;
 
     Authentication auth;
 

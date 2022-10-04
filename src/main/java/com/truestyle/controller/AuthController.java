@@ -7,6 +7,8 @@ import com.truestyle.service.AuthService;
 import com.truestyle.service.SecurityService;
 import com.truestyle.service.SettingService;
 import javax.servlet.http.HttpServletRequest;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*", maxAge = 3600) // Работа с безопасностью браузера
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    AuthService authService;
+    private final AuthService authService;
 
 
     /** Аутентификация пользователя

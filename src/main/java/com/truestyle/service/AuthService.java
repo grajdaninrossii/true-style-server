@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthService {
-
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
