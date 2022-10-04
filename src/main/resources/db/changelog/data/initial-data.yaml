@@ -1,0 +1,225 @@
+databaseChangeLog:
+- changeSet:
+      id: 1664868377952-2
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id
+                          name: id
+                          type: NUMERIC
+                    - column:
+                          header: actual_version_number
+                          name: actual_version_number
+                          type: STRING
+                    - column:
+                          header: min_actual_version_number
+                          name: min_actual_version_number
+                          type: STRING
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/app_versions.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: app_versions
+- changeSet:
+        id: 1664868377952-6
+        author: kuzin (generated)
+        changes:
+              - loadData:
+                      columns:
+                            - column:
+                                    header: id
+                                    name: id
+                                    type: NUMERIC
+                            - column:
+                                    header: name
+                                    name: name
+                                    type: STRING
+                      commentLineStartsWith: '#'
+                      encoding: UTF-8
+                      file: data/category.csv
+                      quotchar: '"'
+                      separator: ','
+                      relativeToChangelogFile: true
+                      tableName: category
+- changeSet:
+      id: 1664868377952-4
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id_article
+                          name: id_article
+                          type: NUMERIC
+                    - column:
+                          header: description
+                          name: description
+                          type: STRING
+                    - column:
+                          header: image_url
+                          name: image_url
+                          type: STRING
+                    - column:
+                          header: title
+                          name: title
+                          type: STRING
+                    - column:
+                          header: url
+                          name: url
+                          type: STRING
+                    - column:
+                          header: category_id
+                          name: category_id
+                          type: NUMERIC
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/article.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: article
+- changeSet:
+      id: 1664868377952-8
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id
+                          name: id
+                          type: NUMERIC
+                    - column:
+                          header: gender_name
+                          name: gender_name
+                          type: STRING
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/gender.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: gender
+- changeSet:
+      id: 1664868377952-10
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id
+                          name: id
+                          type: NUMERIC
+                    - column:
+                          header: author
+                          name: author
+                          type: STRING
+                    - column:
+                          header: value
+                          name: value
+                          type: STRING
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/quotes.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: quotes
+- changeSet:
+      id: 1664868377952-12
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id
+                          name: id
+                          type: NUMERIC
+                    - column:
+                          header: name
+                          name: name
+                          type: STRING
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/roles.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: roles
+- changeSet:
+      id: 1664868377952-14
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id
+                          name: id
+                          type: NUMERIC
+                    - column:
+                          header: name
+                          name: name
+                          type: STRING
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/style_user.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: style_user
+- changeSet:
+      id: 1664868377952-27
+      author: kuzin (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: id
+                          name: id
+                          type: NUMERIC
+                    - column:
+                          header: article_type
+                          name: article_type
+                          type: STRING
+                    - column:
+                          header: base_color
+                          name: base_color
+                          type: STRING
+                    - column:
+                          header: image_url
+                          name: image_url
+                          type: STRING
+                    - column:
+                          header: master_category
+                          name: master_category
+                          type: STRING
+                    - column:
+                          header: product_display_name
+                          name: product_display_name
+                          type: STRING
+                    - column:
+                          header: season
+                          name: season
+                          type: STRING
+                    - column:
+                          header: usage
+                          name: usage
+                          type: STRING
+                    - column:
+                          header: store_link
+                          name: store_link
+                          type: STRING
+                    - column:
+                          header: gender_id
+                          name: gender_id
+                          type: NUMERIC
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/shop_stuff.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: shop_stuff

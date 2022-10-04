@@ -1,0 +1,652 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1664868377952-1
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: app_versions_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: actual_version_number
+                  type: VARCHAR(255)
+              - column:
+                  name: min_actual_version_number
+                  type: VARCHAR(255)
+            tableName: app_versions
+  - changeSet:
+      id: 1664868377952-3
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: article_pkey
+                  name: id_article
+                  type: BIGINT
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: url
+                  type: VARCHAR(255)
+              - column:
+                  name: category_id
+                  type: BIGINT
+            tableName: article
+  - changeSet:
+      id: 1664868377952-5
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: category_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: category
+  - changeSet:
+      id: 1664868377952-7
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: gender_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: gender_name
+                  type: VARCHAR(20)
+            tableName: gender
+  - changeSet:
+      id: 1664868377952-9
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: quotes_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: author
+                  type: VARCHAR(255)
+              - column:
+                  name: value
+                  type: VARCHAR(255)
+            tableName: quotes
+  - changeSet:
+      id: 1664868377952-11
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: roles_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(20)
+            tableName: roles
+  - changeSet:
+      id: 1664868377952-13
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: style_user_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(20)
+            tableName: style_user
+  - changeSet:
+      id: 1664868377952-15
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: code_number1
+                  type: VARCHAR(4)
+              - column:
+                  name: code_number2
+                  type: VARCHAR(4)
+              - column:
+                  name: country
+                  type: VARCHAR(120)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: full_number
+                  type: VARCHAR(15)
+              - column:
+                  name: number
+                  type: VARCHAR(7)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: photo_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: VARCHAR(35)
+              - column:
+                  name: gender_id
+                  type: BIGINT
+              - column:
+                  name: style_user_id
+                  type: BIGINT
+            tableName: users
+  - changeSet:
+      id: 1664868377952-16
+      author: kuzin (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: gender_name
+            constraintName: uk5frpwtblh7i5h9l59lvqqfch0
+            tableName: gender
+  - changeSet:
+      id: 1664868377952-17
+      author: kuzin (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uk6dotkott2kjsp8vw4d0m25fb7
+            tableName: users
+  - changeSet:
+      id: 1664868377952-18
+      author: kuzin (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: ukr43af9ap4edm43mmtq01oddj6
+            tableName: users
+  - changeSet:
+      id: 1664868377952-19
+      author: kuzin (generated)
+      changes:
+        - createSequence:
+            cacheSize: 1
+            cycle: false
+            dataType: bigint
+            incrementBy: 1
+            maxValue: 9223372036854775807
+            minValue: 1
+            sequenceName: hibernate_sequence
+            startValue: 1
+  - changeSet:
+      id: 1664868377952-20
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: likes_stuff_pkey
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: likes_stuff_pkey
+                  name: stuff_id
+                  type: BIGINT
+            tableName: likes_stuff
+  - changeSet:
+      id: 1664868377952-21
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: password_reset_token_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: expiry_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: token
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: BIGINT
+            tableName: password_reset_token
+  - changeSet:
+      id: 1664868377952-22
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: shop_stuff_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: article_type
+                  type: VARCHAR(50)
+              - column:
+                  name: base_color
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  name: master_category
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: product_display_name
+                  type: VARCHAR(255)
+              - column:
+                  name: season
+                  type: VARCHAR(20)
+              - column:
+                  name: usage
+                  type: VARCHAR(20)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: store_link
+                  type: VARCHAR(255)
+              - column:
+                  name: gender_id
+                  type: BIGINT
+            tableName: shop_stuff
+  - changeSet:
+      id: 1664868377952-23
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_roles_pkey
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_roles_pkey
+                  name: role_id
+                  type: BIGINT
+            tableName: user_roles
+  - changeSet:
+      id: 1664868377952-24
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_stuff_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: article_type
+                  type: VARCHAR(50)
+              - column:
+                  name: base_color
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  name: master_category
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: product_display_name
+                  type: VARCHAR(255)
+              - column:
+                  name: season
+                  type: VARCHAR(20)
+              - column:
+                  name: usage
+                  type: VARCHAR(20)
+              - column:
+                  name: gender_id
+                  type: BIGINT
+            tableName: user_stuff
+  - changeSet:
+      id: 1664868377952-25
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: wardrobe_from_shops_pkey
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: wardrobe_from_shops_pkey
+                  name: shops_stuff_id
+                  type: BIGINT
+            tableName: wardrobe_from_shops
+  - changeSet:
+      id: 1664868377952-26
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: wardrobe_from_users_pkey
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: wardrobe_from_users_pkey
+                  name: users_stuff_id
+                  type: BIGINT
+            tableName: wardrobe_from_users
+  - changeSet:
+      id: 1664868377952-28
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: gender_id
+            baseTableName: user_stuff
+            constraintName: fk41uq5j5mwiv367ny6totp8g5r
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: gender
+            validate: true
+  - changeSet:
+      id: 1664868377952-29
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: password_reset_token
+            constraintName: fk83nsrttkwkb6ym0anu051mtxn
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1664868377952-30
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: stuff_id
+            baseTableName: likes_stuff
+            constraintName: fk9gtsihnjjcf8gwd0g8xig3k5s
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shop_stuff
+            validate: true
+  - changeSet:
+      id: 1664868377952-31
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: users_stuff_id
+            baseTableName: wardrobe_from_users
+            constraintName: fkb0lbuhkx0x9hibgtndff2edto
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: user_stuff
+            validate: true
+  - changeSet:
+      id: 1664868377952-32
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: likes_stuff
+            constraintName: fkeck8xmlt6tg7gyn0eoacu93s8
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1664868377952-33
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: style_user_id
+            baseTableName: users
+            constraintName: fkfco2pil1g5hpt5jem1h9hup0h
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: style_user
+            validate: true
+  - changeSet:
+      id: 1664868377952-34
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: user_roles
+            constraintName: fkh8ciramu9cc9q3qcqiv4ue8a6
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: roles
+            validate: true
+  - changeSet:
+      id: 1664868377952-35
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_roles
+            constraintName: fkhfh9dx7w3ubf1co1vdev94g3f
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1664868377952-36
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: shops_stuff_id
+            baseTableName: wardrobe_from_shops
+            constraintName: fki6m6cmjm4mnilln6piob9dsw8
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shop_stuff
+            validate: true
+  - changeSet:
+      id: 1664868377952-37
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: gender_id
+            baseTableName: shop_stuff
+            constraintName: fkiy55k139qij5y4h1svyf84em6
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: gender
+            validate: true
+  - changeSet:
+      id: 1664868377952-38
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: wardrobe_from_shops
+            constraintName: fkjyngipgfs1eo2j2uayg8p0l8g
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1664868377952-39
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: gender_id
+            baseTableName: users
+            constraintName: fko0h29eo9e4y4wvd5yh0sn03rp
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: gender
+            validate: true
+  - changeSet:
+      id: 1664868377952-40
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: wardrobe_from_users
+            constraintName: fkqnbeb391p1umgpo9uofbxtmw9
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1664868377952-41
+      author: kuzin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: article
+            constraintName: fky5kkohbk00g0w88fi05k2hcw
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: category
+            validate: true
