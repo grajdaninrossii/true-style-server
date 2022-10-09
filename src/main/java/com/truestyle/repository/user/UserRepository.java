@@ -18,11 +18,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
 
-    @Query(value = "select EXISTS(select * from wardrobe_from_users where user_id = ?1 and stuff_id = ?2)",
+    @Query(value = "select EXISTS(select * from wardrobe_from_users where user_id = ?1 and users_stuff_id = ?2)",
             nativeQuery = true)
     Boolean existsStuffInUsersWardrobe(Long userId, Long stuffId);
 
-    @Query(value = "select EXISTS(select * from wardrobe_from_shops where user_id = ?1 and stuff_id = ?2)",
+    @Query(value = "select EXISTS(select * from wardrobe_from_shops where user_id = ?1 and shops_stuff_id = ?2)",
             nativeQuery = true)
     Boolean existsStuffInShopsWardrobe(Long userId, Long stuffId);
 
