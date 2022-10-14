@@ -138,7 +138,7 @@ public class WardrobeController {
         }
 
         // Иначе
-        return ResponseEntity.badRequest().body(new MessageResponse("Stuff has already been added"));
+        return ResponseEntity.badRequest().body(new MessageResponse("Stuff didn't add, because StuffInfo invalid"));
     }
 
     /** Удалить шмотку из гардероба пользователя

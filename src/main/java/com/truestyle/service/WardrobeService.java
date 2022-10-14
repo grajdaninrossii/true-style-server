@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 // -------------------------------------Проверить и дописать--------------------------------//
@@ -42,27 +44,25 @@ public class WardrobeService {
 
     private final StuffUserRepository userStuffRepository;
 
+    private final SecurityService auth;
+
     @Value("${upload.path.user}")
     private String uploadPathUser;
 
     @Value("${upload.path.shop}")
     private String uploadPathShop;
 
-    Authentication auth;
+    private List<String> uniqueArtType;
 
     // Получить информацию об одной вещи из гардероба(МАГАЗИН)
     public UserStuff getUserStuff(Long stuffId){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
-
+        User user = auth.getAuthUser();
         return userStuffRepository.findById(stuffId).orElseThrow(() -> new RuntimeException("Error, Stuff is not found!"));
     }
 
     // Получить информацию об одной вещи из гардероба(пользователь)
     public ByteArrayResource getImage(String type, String stuffUrl) throws IOException {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
-
+        User user = auth.getAuthUser();
         String stuffPath = "";
 
         if (type.equals("shop")){
@@ -78,16 +78,13 @@ public class WardrobeService {
 
     // Получить информацию об одной вещи из гардероба(пользователь)
     public ShopStuff getShopStuff(Long stuffId){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
-
+        User user = auth.getAuthUser();
         return shopStuffRepository.findById(stuffId).orElseThrow(() -> new RuntimeException("Error, Stuff is not found!"));
     }
 
     // Получить все шмотки пользователя (хз, зачем), треню малехо)
     public WardrobeResponse getWardrobe(){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found"));
+        User user = auth.getAuthUser();
 
         // Создаем гардероб
         WardrobeResponse wardrobe = new WardrobeResponse();
@@ -99,8 +96,7 @@ public class WardrobeService {
 
     // Выдать шмотки пользователю по определенному сезону
     public WardrobeResponse getWardrobeBySeason(String season){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found"));
+        User user = auth.getAuthUser();
 
         ArrayList<ShopStuff> shopsStuff = new ArrayList<>();
         user.getWardrobeShops().forEach(stuff -> {
@@ -126,8 +122,8 @@ public class WardrobeService {
 
     // Проверка наличия вещи в гардеробе
     public Boolean checkStuffInWardrobe(String typeWardrobe, Long stuffId){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
+
         if (typeWardrobe.equalsIgnoreCase("shop")){
             return userRepository.existsStuffInShopsWardrobe(user.getId(), stuffId);
         }
@@ -137,8 +133,16 @@ public class WardrobeService {
     // Добавить шмотку пользователю
     public Boolean addUsersStuffInWardrobe(UserStuff stuffInfo, MultipartFile file) throws IOException {
 
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        if (uniqueArtType == null){
+            uniqueArtType = shopStuffRepository.findArticleTypes();
+        }
+
+        if (! uniqueArtType.contains(stuffInfo.getArticleType())){
+            return false;
+        }
+
+
+        User user = auth.getAuthUser();
 
         boolean result = false;
 
@@ -182,15 +186,13 @@ public class WardrobeService {
             }
         }
 
-
         return result;
     }
 
     // Добавить магазинную шмотку пользователю
     public Boolean addShopsStuffInWardrobe(Long stuffId){
 
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
 
         ShopStuff shopsStuff = shopStuffRepository.findById(stuffId).orElseThrow(() -> new RuntimeException("Error, Stuff is not found!"));
         Boolean result = user.addShopsStuff(shopsStuff);
@@ -201,8 +203,8 @@ public class WardrobeService {
 
     // Забрать шмотку у пользователя и погладить
     public Boolean deleteUsersStuffInWardrobe(Long stuffId) throws IOException {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+
+        User user = auth.getAuthUser();
 
         Boolean result = false;
 
@@ -224,8 +226,8 @@ public class WardrobeService {
 
     // Забрать шмотку у пользователя(магазинную), но не бить)
     public Boolean deleteShopsStuffInWardrobe(Long stuffId) {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+
+        User user = auth.getAuthUser();
 
         Boolean result = false;
 
@@ -239,16 +241,14 @@ public class WardrobeService {
 
     // Отметить шмотку как понравившуюся
     public void likeStuff(ShopStuff shopsStuff){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
         user.likeShopsStuff(shopsStuff);
         userRepository.save(user);
     }
 
     // Убрать лайк со шмотки
     public void dislikeStuff(ShopStuff shopsStuff){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
         user.dislikeShopsStuff(shopsStuff);
         userRepository.save(user);
     }

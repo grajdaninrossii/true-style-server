@@ -19,13 +19,42 @@ public interface StuffShopRepository extends JpaRepository<ShopStuff, Long> {
     Optional<ShopStuff> findByImageUrl(String url);
 
 
-    @Query(value = "SELECT * FROM shop_stuff s WHERE s.season = ?1",
+    @Query(value = "SELECT * FROM shop_stuff s WHERE s.season = ?1 ",
             nativeQuery = true)
     List<ShopStuff> findAllByOrderSeason(String season);
 
-    @Query(value = "select * from shop_stuff order by random() limit 5",
+    @Query(value = "(select * from shop_stuff " +
+            "where article_type like %?1% and gender_id = ?5 order by random() limit 2) " +
+            "UNION " +
+            "(select * from shop_stuff " +
+            "where article_type like %?2% and gender_id = ?5 order by random() limit 2) " +
+            "UNION " +
+            "(select * from shop_stuff " +
+            "where season like %?3% and gender_id = ?5 order by random() limit 1) " +
+            "UNION " +
+            "(select * from shop_stuff " +
+            "where season like %?4% and gender_id = ?5 order by random() limit 1) " +
+            "UNION " +
+            "(select * from shop_stuff order by random() limit 1) ",
            nativeQuery = true)
-    List<ShopStuff> findByRecommended();
+    List<ShopStuff> findByRecommended(String artTypeTop1, String artTypeTop2, String season1, String season2, Gender gender);
+
+    @Query(value = "(select * from shop_stuff " +
+            "where article_type like %?1% order by random() limit 2) " +
+            "UNION " +
+            "(select * from shop_stuff " +
+            "where article_type like %?2% order by random() limit 2) " +
+            "UNION " +
+            "(select * from shop_stuff " +
+            "where season like %?3% order by random() limit 1) " +
+            "UNION " +
+            "(select * from shop_stuff " +
+            "where season like %?4% order by random() limit 1) " +
+            "UNION " +
+            "(select * from shop_stuff order by random() limit 1) ",
+            nativeQuery = true)
+    List<ShopStuff> findByRecommendedWithoutGender(String artTypeTop1, String artTypeTop2, String season1, String season2);
+
 
     @Query(value = "select DISTINCT season from shop_stuff",
             nativeQuery = true)
@@ -48,9 +77,13 @@ public interface StuffShopRepository extends JpaRepository<ShopStuff, Long> {
 //    @Query(value = "select * from stuff where article_type = ?1 and base_color =?2 and gender_id = ?3 and master_category = ?4 and season = ?5 and sub_category = ?6 limit 10",
 //            nativeQuery = true)
 
-    @Query(value = "select * from shop_stuff where article_type like %?1% and gender_id = ?2 and season like %?3% and base_color like %?4% limit 10",
+    @Query(value = "select * from shop_stuff where article_type like %?1% and gender_id = ?2 and season like %?3% and base_color like %?4% order by random() limit 10",
             nativeQuery = true)
     List<ShopStuff> findCVStuff(String articleType, Gender gender, String season, String color);
+
+    @Query(value = "select * from shop_stuff where article_type like %?1% and season like %?2% and base_color like %?3% order by random() limit 10",
+            nativeQuery = true)
+    List<ShopStuff> findCVWithoutGenderStuff(String articleType, String season, String color);
 
 //    @Query("select e from ShopStuff e "
 //            +"where (e.articleType like '%:articleType%') "

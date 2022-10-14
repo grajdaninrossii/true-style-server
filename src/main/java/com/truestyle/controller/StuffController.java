@@ -26,7 +26,7 @@ public class StuffController {
     @PostMapping("/get/cv")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<ShopStuff> getCvStuff(@RequestBody ShopStuffCVData stuffData){
-        return stuffService.getStuffMLReccomendation(stuffData);
+        return stuffService.getStuffMLRRecommendation(stuffData);
     }
 
     /** Получить одежду для рекоммендаций
@@ -35,6 +35,7 @@ public class StuffController {
      * @return JSON(List<Stuff>)
      */
     @GetMapping("/recommended")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<ShopStuff> getStuffRecommended(){
         return stuffService.getStuffByRecommended();
     }

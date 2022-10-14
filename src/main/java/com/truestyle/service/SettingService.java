@@ -25,7 +25,7 @@ public class SettingService {
 
     private final StyleUserRepository styleUserRepo;
 
-    Authentication auth;
+    private final SecurityService auth;
 
     // Получить все цитатки
     public List<StyleUser> getAllStyleUser(){
@@ -34,16 +34,14 @@ public class SettingService {
 
     // Получить цитату пользователя
     public StyleUser getStyleUser(){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
         return user.getStyleUser();
     }
 
     // Сохранить цитатку пользователя
     public List<String> saveStyleUser(Long idPhrase){
 
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
         if (!styleUserRepo.existsById(idPhrase)){
             return Arrays.asList("bad", "Error: styleUser isn't exist");
         }
@@ -54,8 +52,7 @@ public class SettingService {
     }
 
     public List<String> saveUserSettings(SettingRequest userData){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
         if (!genderRepository.existsById(userData.getGender())){
             return Arrays.asList("bad", "Error: Email isn't exist");
         }
@@ -68,8 +65,7 @@ public class SettingService {
     }
 
     public UserInfo getUserSetting(){
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+        User user = auth.getAuthUser();
         UserInfo userInfo = new UserInfo();
 
         userInfo.setUsername(user.getUsername());

@@ -32,8 +32,11 @@ public class SecurityService {
 
     private final JwtUtils jwtUtils;
 
-    private final AuthenticationManager authenticationManager;
-
+    Authentication auth;
+    public User getAuthUser(){
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByUsername(auth.getName()).orElseThrow(() -> new RuntimeException("Error, User is not found, но аутентифицирован!))"));
+    }
 
 
     // Выслать письмо с токеном для обновления пароля + сохраняем токен
