@@ -133,14 +133,10 @@ public class WardrobeService {
     // Добавить шмотку пользователю
     public Boolean addUsersStuffInWardrobe(UserStuff stuffInfo, MultipartFile file) throws IOException {
 
-        if (uniqueArtType == null){
-            uniqueArtType = shopStuffRepository.findArticleTypes();
-        }
+        if (uniqueArtType == null) uniqueArtType = shopStuffRepository.findArticleTypes();
 
-        if (! uniqueArtType.contains(stuffInfo.getArticleType())){
-            return false;
-        }
-
+        // Проверка для Александры 😘
+        if (! uniqueArtType.contains(stuffInfo.getArticleType())) return false;
 
         User user = auth.getAuthUser();
 

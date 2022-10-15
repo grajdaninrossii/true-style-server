@@ -1,0 +1,46 @@
+databaseChangeLog:
+- changeSet:
+    id: 1664868377953-9
+    author: kuzin (generated)
+    changes:
+       - delete:
+            schemaName:  public
+            tableName: article
+            where: id_article>0
+- changeSet:
+    id: 1664868377953-10
+    author: kuzin (generated)
+    changes:
+        - loadData:
+              columns:
+                  - column:
+                        header: id_article
+                        name: id_article
+                        type: NUMERIC
+                  - column:
+                        header: description
+                        name: description
+                        type: STRING
+                  - column:
+                        header: image_url
+                        name: image_url
+                        type: STRING
+                  - column:
+                        header: title
+                        name: title
+                        type: STRING
+                  - column:
+                        header: url
+                        name: url
+                        type: STRING
+                  - column:
+                        header: category_id
+                        name: category_id
+                        type: NUMERIC
+              commentLineStartsWith: '#'
+              encoding: UTF-8
+              file: ../data/data/article_v2.csv
+              quotchar: '"'
+              separator: ','
+              relativeToChangelogFile: true
+              tableName: article

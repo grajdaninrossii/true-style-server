@@ -4,6 +4,11 @@
     margin: 0;
 }
 
+a {
+    font-family: 'Roboto', sans-serif;
+    color: #2f2f2fe4;
+}
+
 div {
     font-family: 'Roboto', sans-serif;
 }
@@ -70,6 +75,7 @@ body {
     flex-direction: column;
     color: #000000c1;
 }
+
 .footer{
     display: flex;
     flex-direction: column;
