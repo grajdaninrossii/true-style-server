@@ -4,13 +4,12 @@ import com.truestyle.entity.stuff.ShopStuff;
 import com.truestyle.entity.stuff.UserStuff;
 import com.truestyle.pojo.MessageResponse;
 import com.truestyle.pojo.WardrobeResponse;
-import com.truestyle.service.StuffService;
-import com.truestyle.service.WardrobeService;
+import com.truestyle.service.stuff.StuffService;
+import com.truestyle.service.stuff.WardrobeService;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/wardrobe")
@@ -29,18 +29,35 @@ public class WardrobeController {
 
     private final StuffService stuffService;
 
+    /** Получить данные о вещи из гардероба пользователя
+     *
+     * @param stuffId id вещи в бд
+     * @return вернет json с информацией о вещи
+     */
     @GetMapping(value = "/get/userstuff")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<UserStuff> getUserStuff(@RequestParam("id") Long stuffId){
          return ResponseEntity.ok(wardrobeService.getUserStuff(stuffId));
     }
 
+    /** Получить данные о вещи из магазина
+     *
+     * @param stuffId id вещи в бд
+     * @return вернет json с информацией о вещи
+     */
     @GetMapping(value = "/get/shopstuff")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<ShopStuff> getShopStuff(@RequestParam("id") Long stuffId){
         return ResponseEntity.ok(wardrobeService.getShopStuff(stuffId));
     }
 
+    /** Получить фото вещи пользователя
+     *
+     * @param type - shop or user
+     * @param url - id фото
+     * @return возвращает файл картинки
+     * @throws IOException
+     */
     @GetMapping(value = "/img/{url}")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> getUserStuffImg(@RequestParam("type") String type,
@@ -118,6 +135,16 @@ public class WardrobeController {
         return ResponseEntity.badRequest().body(new MessageResponse("Stuff has already been added"));
     }
 
+    /** Получить все значения articleType вещей магазина
+     *
+     * @return если класс одежды не записан в бд, вернет ошибку
+     */
+    @GetMapping("/all/articleType")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public List<String> existArtType(){
+        return wardrobeService.findAllArticleTypeInShops();
+    }
+
     /** Сохранение шмотки пользователя в гардероб
      *
      * @param stuffInfo тип хранения, id шмотки, фото(если, нужно) + нужен токен!
@@ -130,15 +157,15 @@ public class WardrobeController {
     public ResponseEntity<?> addUsersStuffInWardrobe(@RequestPart("info") UserStuff stuffInfo,
                                                 @RequestPart("file") @Valid MultipartFile img) throws IOException {
 
-        Boolean result = wardrobeService.addUsersStuffInWardrobe(stuffInfo, img);
+        String result = wardrobeService.addUsersStuffInWardrobe(stuffInfo, img);
 
         // Если пользователь был добавлен успешно
-        if (Boolean.TRUE.equals(result)){
+        if (result.equals("Good")){
             return ResponseEntity.ok(new MessageResponse("Stuff ADDED"));
         }
 
         // Иначе
-        return ResponseEntity.badRequest().body(new MessageResponse("Stuff didn't add, because StuffInfo invalid"));
+        return ResponseEntity.badRequest().body(new MessageResponse("Stuff didn't add, because " + result));
     }
 
     /** Удалить шмотку из гардероба пользователя

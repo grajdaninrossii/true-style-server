@@ -1,10 +1,10 @@
-package com.truestyle.service;
+package com.truestyle.service.user;
 
 import com.truestyle.entity.user.Gender;
 import com.truestyle.entity.user.User;
 import com.truestyle.repository.user.UserRepository;
+import com.truestyle.service.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,4 +1,4 @@
-package com.truestyle.service;
+package com.truestyle.service.stuff;
 
 import com.truestyle.entity.stuff.ShopStuff;
 import com.truestyle.entity.stuff.UserStuff;
@@ -7,29 +7,21 @@ import com.truestyle.pojo.WardrobeResponse;
 import com.truestyle.repository.stuff.StuffShopRepository;
 import com.truestyle.repository.stuff.StuffUserRepository;
 import com.truestyle.repository.user.UserRepository;
+import com.truestyle.service.user.SecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 // -------------------------------------Проверить и дописать--------------------------------//
 
@@ -130,17 +122,35 @@ public class WardrobeService {
         return userRepository.existsStuffInUsersWardrobe(user.getId(), stuffId);
     }
 
-    // Добавить шмотку пользователю
-    public Boolean addUsersStuffInWardrobe(UserStuff stuffInfo, MultipartFile file) throws IOException {
-
+    // Проверить, есть ли ArticleType пользователя в базе данных
+    public Boolean existArticleTypeInDB(String articleType){
+        // Проверка соответствия типа с
         if (uniqueArtType == null) uniqueArtType = shopStuffRepository.findArticleTypes();
 
         // Проверка для Александры 😘
-        if (! uniqueArtType.contains(stuffInfo.getArticleType())) return false;
+        if (uniqueArtType.contains(articleType)) return true;
+        return false;
+    }
+
+    public List<String> findAllArticleTypeInShops(){
+        return shopStuffRepository.findArticleTypes();
+    }
+
+    // Добавить шмотку пользователю
+    public String addUsersStuffInWardrobe(UserStuff stuffInfo, MultipartFile file) throws IOException {
 
         User user = auth.getAuthUser();
 
-        boolean result = false;
+        if (userStuffRepository.countUserStuff(user.getId()) > 110){
+            return "The wardrobe is limited to 110 items!";
+        }
+
+        // Проверка корректности articleType
+        if (!existArticleTypeInDB(stuffInfo.getArticleType())){
+            return "ArticleType isn't found";
+        }
+
+        String result = "";
 
         // Проверка на наличие файла
         if (!file.isEmpty()) {
@@ -148,7 +158,7 @@ public class WardrobeService {
 
             // Создадим директорию, если ее нет
             if (!uploadDir.exists()) {
-                result = uploadDir.mkdir();
+                result = uploadDir.mkdir()? "Good": "Bad";
             }
 
             // Сохраним уникальное имя файла
@@ -165,20 +175,23 @@ public class WardrobeService {
             stuffInfo.setImageUrl("/" + resultFilename);
 
             // Удалить файл, если не получилось сохранить запись в бд
+            Path path = Paths.get(resultPath);
             try{
                 // Сохраняем шмотку в бд
                 userStuffRepository.save(stuffInfo);
             } catch (RuntimeException e){
-                Files.delete(Paths.get(resultPath));
+                Files.delete(path);
             }
 
             try{
                 // Сохраняем шмотку у пользователя
-                result = user.addUsersStuff(stuffInfo);
-                userRepository.save(user);
-
+                if (user.addUsersStuff(stuffInfo)) {
+                    result = "Good";
+                    userRepository.save(user);
+                }
             } catch (RuntimeException e){
-                Files.delete(Paths.get(resultPath));
+                userStuffRepository.delete(stuffInfo);
+                Files.delete(path);
             }
         }
 
@@ -225,10 +238,8 @@ public class WardrobeService {
 
         User user = auth.getAuthUser();
 
-        Boolean result = false;
-
         ShopStuff shopsStuff = shopStuffRepository.findById(stuffId).orElseThrow(() -> new RuntimeException("Error, Stuff is not found!"));
-        result = user.deleteShopsStuff(shopsStuff);
+        Boolean result = user.deleteShopsStuff(shopsStuff);
         userRepository.save(user);
 
         return result;

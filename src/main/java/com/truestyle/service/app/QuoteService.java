@@ -1,4 +1,4 @@
-package com.truestyle.service;
+package com.truestyle.service.app;
 
 import com.truestyle.entity.app.Quote;
 import com.truestyle.repository.app.QuoteRepository;

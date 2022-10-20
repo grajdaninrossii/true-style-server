@@ -3,9 +3,9 @@ package com.truestyle.controller;
 
 import com.truestyle.entity.user.StyleUser;
 import com.truestyle.pojo.*;
-import com.truestyle.service.SecurityService;
-import com.truestyle.service.SettingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.truestyle.service.user.SecurityService;
+import com.truestyle.service.user.SettingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", maxAge = 3600) // Работа с безопасностью браузера
+@RequiredArgsConstructor
 public class UserController {
 
+    private final SettingService settingService;
 
-    @Autowired
-    SettingService settingService;
-
-    @Autowired
-    SecurityService securityService;
+    private final SecurityService securityService;
 
     /** Обновление полей пользователя(без email, password, username)
      *

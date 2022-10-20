@@ -1,6 +1,6 @@
 package com.truestyle.config.jwt;
 
-import com.truestyle.service.UserDetailsServiceImpl;
+import com.truestyle.service.user.UserDetailsServiceImpl;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

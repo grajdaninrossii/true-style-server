@@ -1,4 +1,4 @@
-package com.truestyle.service;
+package com.truestyle.service.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.truestyle.entity.user.Gender;

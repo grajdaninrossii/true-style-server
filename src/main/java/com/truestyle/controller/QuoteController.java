@@ -1,7 +1,7 @@
 package com.truestyle.controller;
 
 import com.truestyle.entity.app.Quote;
-import com.truestyle.service.QuoteService;
+import com.truestyle.service.app.QuoteService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

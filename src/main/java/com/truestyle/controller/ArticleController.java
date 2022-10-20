@@ -1,9 +1,8 @@
 package com.truestyle.controller;
 
 import com.truestyle.entity.app.Article;
-import com.truestyle.service.ArticleService;
+import com.truestyle.service.app.ArticleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

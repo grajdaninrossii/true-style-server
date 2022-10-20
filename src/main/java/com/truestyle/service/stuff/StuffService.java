@@ -1,14 +1,14 @@
-package com.truestyle.service;
+package com.truestyle.service.stuff;
 
 
 import com.truestyle.entity.stuff.ShopStuff;
 import com.truestyle.entity.stuff.UserStuff;
-import com.truestyle.entity.user.Gender;
 import com.truestyle.entity.user.User;
 import com.truestyle.pojo.ShopStuffCVData;
 import com.truestyle.repository.user.GenderRepository;
 import com.truestyle.repository.stuff.StuffShopRepository;
 import com.truestyle.repository.user.UserRepository;
+import com.truestyle.service.user.SecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 

@@ -3,15 +3,10 @@ package com.truestyle.controller;
 import java.util.List;
 
 import com.truestyle.pojo.*;
-import com.truestyle.service.AuthService;
-import com.truestyle.service.SecurityService;
-import com.truestyle.service.SettingService;
-import javax.servlet.http.HttpServletRequest;
+import com.truestyle.service.user.AuthService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-
 
     /** Аутентификация пользователя
      *

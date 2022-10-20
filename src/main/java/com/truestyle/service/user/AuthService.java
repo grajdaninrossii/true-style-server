@@ -1,4 +1,4 @@
-package com.truestyle.service;
+package com.truestyle.service.user;
 
 import com.truestyle.config.jwt.JwtUtils;
 import com.truestyle.entity.user.ERole;
@@ -9,7 +9,6 @@ import com.truestyle.pojo.LoginRequest;
 import com.truestyle.pojo.SignupRequest;
 import com.truestyle.repository.user.RoleRepository;
 import com.truestyle.repository.user.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

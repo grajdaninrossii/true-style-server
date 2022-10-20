@@ -1,7 +1,7 @@
 package com.truestyle.controller;
 
-import com.truestyle.service.AuthService;
-import com.truestyle.service.StuffService;
+import com.truestyle.service.user.AuthService;
+import com.truestyle.service.stuff.StuffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

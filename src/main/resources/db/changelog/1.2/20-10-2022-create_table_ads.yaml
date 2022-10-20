@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1664868377952-1
+      author: kuzin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: advertisement_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: img_url
+                  type: VARCHAR(255)
+              - column:
+                  name: shop_url
+                  type: VARCHAR(255)
+            tableName: advertisement

@@ -2,7 +2,7 @@ package com.truestyle.config;
 
 import com.truestyle.config.jwt.AuthEntryPointJwt;
 import com.truestyle.config.jwt.AuthTokenFilter;
-import com.truestyle.service.UserDetailsServiceImpl;
+import com.truestyle.service.user.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -60,12 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and() // Не нужно использовать куки
                 .authorizeRequests() // указываем api для авторизации
                     .antMatchers("/auth/**").permitAll() // Указываем открытые ресурсы
-//                    .antMatchers("/api/test/**").permitAll()
                     .antMatchers("/arts/**").permitAll()
-//                .antMatchers("/arts/newTrends.html").permitAll() // хз, че так не робит
                     .antMatchers("/user/**").permitAll()
-//                    .antMatchers("/clothes/images/**").authenticated()
                     .antMatchers("/version/info").permitAll()
+                    .antMatchers("/policy/**").permitAll()
                     .anyRequest().authenticated(); // Остальные ресурсы защищены
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

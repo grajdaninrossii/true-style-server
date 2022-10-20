@@ -3,8 +3,8 @@ package com.truestyle.controller;
 import com.truestyle.entity.stuff.ShopStuff;
 import com.truestyle.pojo.MessageResponse;
 import com.truestyle.pojo.ShopStuffCVData;
-import com.truestyle.service.StuffService;
-import com.truestyle.service.WardrobeService;
+import com.truestyle.service.stuff.StuffService;
+import com.truestyle.service.stuff.WardrobeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,11 @@ public class StuffController {
 
     private final StuffService stuffService;
 
+    /** Получить рекомендации после классификации
+     *
+     * @param stuffData - json с информацией о вещи
+     * @return вернет 10 вещей из бд
+     */
     @PostMapping("/get/cv")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<ShopStuff> getCvStuff(@RequestBody ShopStuffCVData stuffData){
