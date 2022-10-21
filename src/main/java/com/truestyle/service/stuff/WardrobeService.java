@@ -68,7 +68,7 @@ public class WardrobeService {
         return new ByteArrayResource(Files.readAllBytes(file.toPath()));
     }
 
-    // Получить информацию об одной вещи из гардероба(пользователь)
+    // Получить информацию об одной вещи из гардероба(магазин)
     public ShopStuff getShopStuff(Long stuffId){
         User user = auth.getAuthUser();
         return shopStuffRepository.findById(stuffId).orElseThrow(() -> new RuntimeException("Error, Stuff is not found!"));
@@ -141,7 +141,8 @@ public class WardrobeService {
 
         User user = auth.getAuthUser();
 
-        if (userStuffRepository.countUserStuff(user.getId()) > 110){
+        Integer countUserStuff = userStuffRepository.countUserStuff(user.getId());
+        if ((countUserStuff==null ? 0:countUserStuff) > 110){
             return "The wardrobe is limited to 110 items!";
         }
 
@@ -150,7 +151,7 @@ public class WardrobeService {
             return "ArticleType isn't found";
         }
 
-        String result = "";
+        String result = "Bad";
 
         // Проверка на наличие файла
         if (!file.isEmpty()) {
@@ -180,16 +181,16 @@ public class WardrobeService {
                 // Сохраняем шмотку в бд
                 userStuffRepository.save(stuffInfo);
             } catch (RuntimeException e){
+                e.fillInStackTrace();
                 Files.delete(path);
             }
 
             try{
                 // Сохраняем шмотку у пользователя
-                if (user.addUsersStuff(stuffInfo)) {
-                    result = "Good";
-                    userRepository.save(user);
-                }
+                result = user.addUsersStuff(stuffInfo) ? "Good": "Bad";
+                userRepository.save(user);
             } catch (RuntimeException e){
+                System.out.println("гг" + e.getMessage());
                 userStuffRepository.delete(stuffInfo);
                 Files.delete(path);
             }
@@ -259,5 +260,4 @@ public class WardrobeService {
         user.dislikeShopsStuff(shopsStuff);
         userRepository.save(user);
     }
-
 }
