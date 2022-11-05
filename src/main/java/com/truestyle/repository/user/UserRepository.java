@@ -59,4 +59,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             nativeQuery = true)
     Optional<User> findByLogin(String username, String email);
 
+    @Query(value = "select EXISTS(select * from users where username = ?1 or email = ?2)",
+            nativeQuery = true)
+    Boolean existsByLoginOrEmail(String username, String email);
+
 }

@@ -141,7 +141,7 @@ public class WardrobeController {
      */
     @GetMapping("/all/articleType")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<String> existArtType(){
+    public List<String> getAllArtType(){
         return wardrobeService.findAllArticleTypeInShops();
     }
 

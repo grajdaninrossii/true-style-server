@@ -40,8 +40,17 @@ public class AuthService {
 
         String usernameOrEmail = loginRequest.getUsername().split(" ")[0];
 
+        // Если пользователь есть в базе, то возвращаем пустой JWTResponse
+        if (!userRepository.existsByLoginOrEmail(usernameOrEmail, usernameOrEmail)){
+            return new JwtResponse(null,
+                    null,
+                    null,
+                    null,
+                    null);
+        }
+
         User user = userRepository.findByLogin(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(()-> new RuntimeException("Error, user is not found"));
+                    .orElseThrow(()-> new RuntimeException("Error, user is not found"));
 
         // Менеджер аутентификации, передаем в конструктор токен аутентификации, в котором имя пользователя и пароль
         Authentication authentication = authenticationManager

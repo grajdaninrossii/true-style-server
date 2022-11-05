@@ -33,6 +33,9 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
         JwtResponse userData = authService.getUserData(loginRequest);
+        if (userData.getToken() == null){
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid username or password"));
+        }
         return ResponseEntity.ok(userData);
     }
 

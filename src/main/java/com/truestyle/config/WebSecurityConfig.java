@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // указываем api для авторизации
                     .antMatchers("/auth/**").permitAll() // Указываем открытые ресурсы
                     .antMatchers("/arts/**").permitAll()
+                    .antMatchers("/ad/**").permitAll()
                     .antMatchers("/user/**").permitAll()
                     .antMatchers("/version/info").permitAll()
                     .antMatchers("/policy/**").permitAll()
@@ -68,5 +69,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
 }
