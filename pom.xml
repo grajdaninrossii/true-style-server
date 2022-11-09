@@ -15,7 +15,7 @@
 <!--	Описываем наш проект-->
 	<groupId>com.dm</groupId>
 	<artifactId>TrueStyle</artifactId>
-	<version>0.5.3</version>
+	<version>0.6.2</version>
 
 	<description>Server megaamperes project</description>
 

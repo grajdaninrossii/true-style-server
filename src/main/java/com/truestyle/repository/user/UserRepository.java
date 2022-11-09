@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,46 +19,64 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
 
-    @Query(value = "select article_type " +
-            "from (wardrobe_from_users w join user_stuff u on u.id = w.users_stuff_id) as u " +
-            "where u.user_id = ?1 " +
-            "group by article_type " +
-            "order by count(article_type) " +
-            "limit 2",
+    @Query(value = "SELECT article_type FROM " +
+            "(SELECT article_type " +
+            "FROM (wardrobe_from_users w join user_stuff u on u.id = w.users_stuff_id) AS u " +
+            "WHERE u.user_id = ?1 " +
+            "UNION ALL " +
+            "SELECT article_type " +
+            "FROM (wardrobe_from_shops w join shop_stuff u on u.id = w.shops_stuff_id) AS u " +
+            "WHERE u.user_id = ?1" +
+            ") as art " +
+            "GROUP BY article_type " +
+            "ORDER BY count(article_type) " +
+            "LIMIT 2",
             nativeQuery = true)
     List<String> findAllArticleTypeInWardrobeUser(Long userId);
 
-    @Query(value = "select article_type " +
-            "from (wardrobe_from_users w join user_stuff u on u.id = w.users_stuff_id) as u " +
-            "where u.user_id = ?1 " +
-            "group by article_type " +
-            "order by count(article_type) DESC " +
-            "limit 2",
+    @Query(value = "SELECT article_type FROM " +
+            "(SELECT article_type " +
+            "FROM (wardrobe_from_users w join user_stuff u on u.id = w.users_stuff_id) AS u " +
+            "WHERE u.user_id = ?1 " +
+            "UNION ALL " +
+            "SELECT article_type " +
+            "FROM (wardrobe_from_shops w join shop_stuff u on u.id = w.shops_stuff_id) AS u " +
+            "WHERE u.user_id = ?1" +
+            ") as art " +
+            "GROUP BY article_type " +
+            "ORDER BY count(article_type) DESC " +
+            "LIMIT 2",
             nativeQuery = true)
     List<String> findAllArticleTypeInWardrobeUserDesc(Long userId);
 
-    @Query(value = "select gender_id " +
-            "from (wardrobe_from_users w join user_stuff u on u.id = w.users_stuff_id) as u " +
-            "where u.user_id = ?1 " +
-            "group by gender_id " +
-            "order by count(gender_id) DESC " +
-            "limit 1",
+    @Query(value = "SELECT gender_id FROM " +
+            "(SELECT gender_id " +
+            "FROM (wardrobe_from_users w join user_stuff u on u.id = w.users_stuff_id) AS u " +
+            "WHERE u.user_id = ?1 " +
+            "UNION ALL " +
+            "SELECT gender_id " +
+            "FROM (wardrobe_from_shops w join shop_stuff u on u.id = w.shops_stuff_id) AS u " +
+            "WHERE u.user_id = ?1" +
+            ") as g " +
+            "GROUP BY gender_id " +
+            "ORDER BY count(gender_id) DESC " +
+            "LIMIT 1",
             nativeQuery = true)
     Long findAllGenderStuffWardrobeUser(Long userId);
 
-    @Query(value = "select EXISTS(select * from wardrobe_from_users where user_id = ?1 and users_stuff_id = ?2)",
+    @Query(value = "SELECT EXISTS(SELECT * FROM wardrobe_from_users WHERE user_id = ?1 and users_stuff_id = ?2)",
             nativeQuery = true)
     Boolean existsStuffInUsersWardrobe(Long userId, Long stuffId);
 
-    @Query(value = "select EXISTS(select * from wardrobe_from_shops where user_id = ?1 and shops_stuff_id = ?2)",
+    @Query(value = "SELECT EXISTS(SELECT * FROM wardrobe_from_shops WHERE user_id = ?1 and shops_stuff_id = ?2)",
             nativeQuery = true)
     Boolean existsStuffInShopsWardrobe(Long userId, Long stuffId);
 
-    @Query(value = "select * from users where username = ?1 or email = ?2",
+    @Query(value = "SELECT * FROM users WHERE username = ?1 or email = ?2",
             nativeQuery = true)
     Optional<User> findByLogin(String username, String email);
 
-    @Query(value = "select EXISTS(select * from users where username = ?1 or email = ?2)",
+    @Query(value = "SELECT EXISTS(SELECT * FROM users WHERE username = ?1 or email = ?2)",
             nativeQuery = true)
     Boolean existsByLoginOrEmail(String username, String email);
 

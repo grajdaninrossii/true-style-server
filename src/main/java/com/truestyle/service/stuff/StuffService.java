@@ -72,17 +72,16 @@ public class StuffService {
         String season1 = MONTH.get(nowMonth);
         String season2 = Math.random() >= 0.5? "демисезон":MONTH.get((nowMonth + 3) % 12);
 
-        // !!!!!!! Придумать, что делать с гендером и прописать логику articleType
+
         if (Math.random() >= 0.5){
             artType = userRepository.findAllArticleTypeInWardrobeUser(user.getId());
-            System.out.println();
         } else {
             artType = userRepository.findAllArticleTypeInWardrobeUserDesc(user.getId());
         }
 
-        if (!artType.isEmpty()){
+        if (!artType.isEmpty()) {
             articleTypeTop1 = artType.get(0);
-            if (artType.size() > 2){
+            if (artType.size() > 2) {
                 articleTypeTop2 = artType.get(1);
             }
         }
