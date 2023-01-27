@@ -68,7 +68,7 @@ public class StuffService {
         List<String> artType;
 
         // Получаем сезоны для рекомендаций
-        int nowMonth = LocalDateTime.now().getMonthValue();
+        int nowMonth = LocalDateTime.now().getMonthValue() - 1;
         String season1 = MONTH.get(nowMonth);
         String season2 = Math.random() >= 0.5? "демисезон":MONTH.get((nowMonth + 3) % 12);
 
